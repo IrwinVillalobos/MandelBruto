@@ -18,7 +18,14 @@
 		<p> Si esta suceción está acotada, entonces el punto $(x, y)$ pertenece al conjunto. Si no está acotada, entonces no pertenece. </p>
 		<p> Para determinar si la sucesión está acotada, se calculan las primeras iteraciones y vemos si la norma de la última iteración tiene norma menor o igual a un margen.</p>
 		<p> Así pues cada pixel se colorea siguiendo estas reglas </p>
-		<p> Ingresa la cantidad de iteraciones: </p>
-		<p> Ingresa el color de fondo: R G B</p> 
+		<p> Ingresa la cantidad de iteraciones: <input type="text" id="iteracionesBox" size="4" /> </p>
+		<p> Ingresa el color de fondo (numeros entre 0 y 255): 
+		R <input type="text" id="redBox" size="1" /> ,
+		G <input type="text" id="greenBox" size="1" /> ,
+		B <input type="text" id="blueBox" size="1" /> 
+		</p>
+		<p>	<input type="button" value="Crear fractal" id="drawButton" /> </p>
+		<canvas width="600" height="400" id="MandelPicture"></canvas> 
+		<script src = "draw.js"></script>
 	</body>
 </html>
