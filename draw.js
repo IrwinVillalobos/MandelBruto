@@ -44,10 +44,6 @@ function isInMandelSet(C){
 	var f = true;
 	
 	while(f && cont < numIter){
-		if(C.re == 0  && C.im == 0){
-			console.log("Pito " + Z);
-			console.log(Z.re + " --- " + Z.im)
-		}
 		if(Z.re*Z.re + Z.im*Z.im < 4.0){
 			Z = math.add(math.multiply(Z, Z), C);
 			cont++;
@@ -62,11 +58,15 @@ function isInMandelSet(C){
 function DrawMandelSet(){
 
 	numIter = parseInt(document.getElementById("iteracionesBox").value);
-	var rBack = parseInt(document.getElementById("redBox").value);
-	var gBack = parseInt(document.getElementById("greenBox").value);
-	var bBack = parseInt(document.getElementById("blueBox").value);
+	var rBack = parseInt(document.getElementById("redBack").value);
+	var gBack = parseInt(document.getElementById("greenBack").value);
+	var bBack = parseInt(document.getElementById("blueBack").value);
+	var rSet = parseInt(document.getElementById("redSet").value);
+	var gSet = parseInt(document.getElementById("greenSet").value);
+	var bSet = parseInt(document.getElementById("blueSet").value);
+
 	var BackColor = "rgb(" + rBack + "," + gBack + "," + bBack + ")";
-	var SetColor = "rgb(0,0,0)";
+	var SetColor = "rgb(" + rSet + "," + gSet + "," + bSet + ")";
 
 	for(var w=0; w<Wdth; w++){
 		for(var h=0; h<Hgth; h++){
