@@ -14,19 +14,12 @@ function PintaPixel(x, y, color){
 	MandelLienzo.fillRect(x, y, 1, 1);
 }
 
-var m = 3;
-var n = m*Hgth/Wdth;
-var vm = -2.2;
-var	vn = -n/2.0;
+var upperLeftRe = -2.4;
+var upperLeftIm = -1.2;
+var zoomH = 2.4;
 
 function MapToComplexPoint(x, y){
-	x *= n; 
-	y *= m;
-	x /= Hgth; 
-	y /= Wdth;
-	x += vn; 
-	y += vm;
-	return math.complex(y, x);
+	return math.complex((zoomH*y)/Hgth+upperLeftRe, (zoomH*x)/Hgth+upperLeftIm);
 }
 
 function isInMandelSet(C){
