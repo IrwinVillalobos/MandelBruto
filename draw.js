@@ -10,17 +10,9 @@ var numIter;
 document.getElementById("drawButton").addEventListener("click", DrawMandelSet);
 
 function PintaPixel(x, y, color){
-	MandelLienzo.beginPath();
-	MandelLienzo.strokeStyle = color;
-	MandelLienzo.moveTo(x, y);
-	MandelLienzo.lineTo(x+1, y);
-	MandelLienzo.lineTo(x+1, y+1);
-	MandelLienzo.lineTo(x, y+1);
-	MandelLienzo.lineTo(x, y);
-	MandelLienzo.stroke();
-	MandelLienzo.closePath();	
+	MandelLienzo.fillStyle = color;
+	MandelLienzo.fillRect(x, y, 1, 1);
 }
-
 
 var m = 3;
 var n = m*Hgth/Wdth;
