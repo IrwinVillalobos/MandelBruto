@@ -5,7 +5,6 @@ var MandelLienzo = MandelCanvas.getContext("2d");
 
 var Wdth = MandelCanvas.width;
 var Hgth = MandelCanvas.height;
-var numIter;
 
 document.getElementById("drawButton").addEventListener("click", DrawMandelSet);
 
@@ -17,49 +16,65 @@ function PintaPixel(x, y, color){
 var upperLeftRe = -2.4;
 var upperLeftIm = -1.2;
 var zoomH = 2.4;
+var ColNums = 10;
 
 function MapToComplexPoint(x, y){
 	return math.complex((zoomH*y)/Hgth+upperLeftRe, (zoomH*x)/Hgth+upperLeftIm);
 }
 
-function isInMandelSet(C){
+var maxIter;
+
+function iterationsToGetOutOfMandelSet(C){
 
 	var Z = math.complex(0, 0);
 	var cont = 0;
-	var f = true;
 	
-	while(f && cont < numIter){
+	while(cont < maxIter){
 		if(Z.re*Z.re + Z.im*Z.im < 4.0){
 			Z = math.add(math.multiply(Z, Z), C);
 			cont++;
 		}
 		else
-			f = false;
+			return cont;
 	}
 	
-	return f;
+	return cont;
+}
+
+var closerDarkest = false;
+
+function MapIterationsToPrimaryCorlor(x, c){
+	if(closerDarkest)
+		return parseInt(((c-255)*x)/(maxIter-2) + (255*(maxIter-1)-c)/(maxIter-2));
+	else
+		return parseInt(((255-c)*x)/(maxIter-2) + (c*(maxIter-1)-255)/(maxIter-2));
 }
 
 function DrawMandelSet(){
 
-	numIter = parseInt(document.getElementById("iteracionesBox").value);
-	var rBack = parseInt(document.getElementById("redBack").value);
-	var gBack = parseInt(document.getElementById("greenBack").value);
-	var bBack = parseInt(document.getElementById("blueBack").value);
+	maxIter = parseInt(document.getElementById("iteracionesBox").value);
+	var rBackBase = parseInt(document.getElementById("redBack").value);
+	var gBackBase = parseInt(document.getElementById("greenBack").value);
+	var bBackBase = parseInt(document.getElementById("blueBack").value);
 	var rSet = parseInt(document.getElementById("redSet").value);
 	var gSet = parseInt(document.getElementById("greenSet").value);
 	var bSet = parseInt(document.getElementById("blueSet").value);
 
-	var BackColor = "rgb(" + rBack + "," + gBack + "," + bBack + ")";
 	var SetColor = "rgb(" + rSet + "," + gSet + "," + bSet + ")";
 
 	for(var w=0; w<Wdth; w++){
 		for(var h=0; h<Hgth; h++){
 			var point = MapToComplexPoint(h, w);
-			if(isInMandelSet(point))
+			var iterations = iterationsToGetOutOfMandelSet(point);
+			if(iterations == maxIter)
 				PintaPixel(w, h, SetColor);
-			else
-				PintaPixel(w, h, BackColor);
+			else{
+				var rPix = MapIterationsToPrimaryCorlor(iterations, rBackBase);
+				var gPix = MapIterationsToPrimaryCorlor(iterations, gBackBase);
+				var bPix = MapIterationsToPrimaryCorlor(iterations, bBackBase);				
+				var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
+				PintaPixel(w, h, pixColor);
+			}
 		}
 	}
 }
