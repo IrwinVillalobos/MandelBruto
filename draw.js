@@ -41,10 +41,10 @@ function iterationsToGetOutOfMandelSet(C){
 	return cont;
 }
 
-var closerDarkest = false;
+var closerDarker = false;
 
 function MapIterationsToPrimaryCorlor(x, c){
-	if(closerDarkest)
+	if(closerDarker)
 		return parseInt(((c-255)*x)/(maxIter-2) + (255*(maxIter-1)-c)/(maxIter-2));
 	else
 		return parseInt(((255-c)*x)/(maxIter-2) + (c*(maxIter-1)-255)/(maxIter-2));
@@ -59,6 +59,7 @@ function DrawMandelSet(){
 	var rSet = parseInt(document.getElementById("redSet").value);
 	var gSet = parseInt(document.getElementById("greenSet").value);
 	var bSet = parseInt(document.getElementById("blueSet").value);
+	closerDarker = document.getElementById("closerDarkerCheckBox").checked;
 
 	var SetColor = "rgb(" + rSet + "," + gSet + "," + bSet + ")";
 
