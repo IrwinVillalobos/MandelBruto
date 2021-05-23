@@ -8,18 +8,18 @@ var Hgth = MandelCanvas.height;
 
 document.getElementById("drawButton").addEventListener("click", DrawMandelSet);
 
-function PintaPixel(x, y, color){
+function paintPixel(x, y, color){
 	MandelLienzo.fillStyle = color;
 	MandelLienzo.fillRect(x, y, 1, 1);
 }
 
-var upperLeftRe = -2.4;
-var upperLeftIm = -1.2;
+var centerRe = -1.2;
+var centerIm = 0;
 var zoomH = 2.4;
 var ColNums = 10;
 
 function MapToComplexPoint(x, y){
-	return math.complex((zoomH*y)/Hgth+upperLeftRe, (zoomH*x)/Hgth+upperLeftIm);
+	return math.complex(zoomH*(y/Hgth - 0.5)+centerRe, zoomH*(x/Hgth - 0.5)+centerIm);	
 }
 
 var maxIter;
@@ -68,13 +68,13 @@ function DrawMandelSet(){
 			var point = MapToComplexPoint(h, w);
 			var iterations = iterationsToGetOutOfMandelSet(point);
 			if(iterations == maxIter)
-				PintaPixel(w, h, SetColor);
+				paintPixel(w, h, SetColor);
 			else{
 				var rPix = MapIterationsToPrimaryCorlor(iterations, rBackBase);
 				var gPix = MapIterationsToPrimaryCorlor(iterations, gBackBase);
 				var bPix = MapIterationsToPrimaryCorlor(iterations, bBackBase);				
 				var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
-				PintaPixel(w, h, pixColor);
+				paintPixel(w, h, pixColor);
 			}
 		}
 	}
