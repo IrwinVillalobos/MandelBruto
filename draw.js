@@ -71,6 +71,7 @@ function mapIterationsToPrimaryColor(x, c){
 }
 
 var rBackBase, gBackBase, bBackBase;
+var rSet, gSet, bSet;
 var SetColor;
 
 var paintPixelMethod = 0;
@@ -81,10 +82,14 @@ var PAINT_PIXEL_METHOD_4TO1_INDV_PLUS = 2;   // -> Cuatro puntos por pixel. No c
 var PAINT_PIXEL_METHOD_4TO1_SHRD_CROSS = 3;  // -> Cuatro puntos por pixel. Comparten puntos. Arreglo en cruz.
 var PAINT_PIXEL_METHOD_4TO1_SHRD_PLUS = 4;   // -> Cuatro puntos por pixel. Comparten puntos. Arreglo en mas.
 
+var crossStep = [ [1, 1], [1, -1], [-1, 1], [-1, -1] ];
+var plusStep = [ [0, 1], [1, 0], [0, -1], [-1, 0] ];
+
 function assignPixelColor(w, h){
 	if(paintPixelMethod == PAINT_PIXEL_METHOD_1TO1){
 		var point = MapToComplexPoint(h, w);
 		var iterations = iterationsToGetOutOfMandelSet(point);
+		SetColor = "rgb(" + rSet + "," + gSet + "," + bSet + ")";
 		if(iterations == maxIter)
 			paintPixel(w, h, SetColor);
 		else{
@@ -96,10 +101,60 @@ function assignPixelColor(w, h){
 		}
 	}
 	else if(paintPixelMethod == PAINT_PIXEL_METHOD_4TO1_INDV_CROSS){
-
+		if(h == 0 && w == 0){
+			console.log("Usando 4 a 1 Indv Cross");
+		}
+		var rPix = 0;
+		var gPix = 0;
+		var bPix = 0;
+		var delta = 0.25*(zoomH/Hgth);
+		for(var i=0; i<4; i++){
+			var point = MapToComplexPoint(h+delta*crossStep[i][0], w+delta*crossStep[i][1]);
+			var iterations = iterationsToGetOutOfMandelSet(point);
+			if(iterations == maxIter){
+				rPix += rSet;
+				gPix += gSet;
+				bPix += bSet;
+			}
+			else{
+				rPix += mapIterationsToPrimaryColor(iterations, rBackBase);
+				gPix += mapIterationsToPrimaryColor(iterations, gBackBase);
+				bPix += mapIterationsToPrimaryColor(iterations, bBackBase);				
+			}
+		}
+		rPix /= 4.0; rPix = parseInt(rPix);
+		gPix /= 4.0; gPix = parseInt(gPix);
+		bPix /= 4.0; bPix = parseInt(bPix);
+		var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
+		paintPixel(w, h, pixColor);
 	}
 	else if(paintPixelMethod == PAINT_PIXEL_METHOD_4TO1_INDV_PLUS){
-
+		if(h == 0 && w == 0){
+			console.log("Usando 4 a 1 Indv Plus");
+		}
+		var rPix = 0;
+		var gPix = 0;
+		var bPix = 0;
+		var delta = 0.25*(zoomH/Hgth);
+		for(var i=0; i<4; i++){
+			var point = MapToComplexPoint(h+delta*plusStep[i][0], w+delta*plusStep[i][1]);
+			var iterations = iterationsToGetOutOfMandelSet(point);
+			if(iterations == maxIter){
+				rPix += rSet;
+				gPix += gSet;
+				bPix += bSet;
+			}
+			else{
+				rPix += mapIterationsToPrimaryColor(iterations, rBackBase);
+				gPix += mapIterationsToPrimaryColor(iterations, gBackBase);
+				bPix += mapIterationsToPrimaryColor(iterations, bBackBase);				
+			}
+		}
+		rPix /= 4.0; rPix = parseInt(rPix);
+		gPix /= 4.0; gPix = parseInt(gPix);
+		bPix /= 4.0; bPix = parseInt(bPix);
+		var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
+		paintPixel(w, h, pixColor);
 	}
 	else if(paintPixelMethod == PAINT_PIXEL_METHOD_4TO1_SHRD_CROSS){
 
@@ -117,9 +172,9 @@ function drawMandelSet(){
 	gBackBase = parseInt(document.getElementById("greenBack").value);
 	bBackBase = parseInt(document.getElementById("blueBack").value);
 	
-	var rSet = parseInt(document.getElementById("redSet").value);
-	var gSet = parseInt(document.getElementById("greenSet").value);
-	var bSet = parseInt(document.getElementById("blueSet").value);
+	rSet = parseInt(document.getElementById("redSet").value);
+	gSet = parseInt(document.getElementById("greenSet").value);
+	bSet = parseInt(document.getElementById("blueSet").value);
 	
 	closerDarker = document.getElementById("closerDarkerCheckBox").checked;
 	
@@ -130,13 +185,15 @@ function drawMandelSet(){
 		mapType = 1;
 	}
 
-	SetColor = "rgb(" + rSet + "," + gSet + "," + bSet + ")";
+	
 
 	for(var w=0; w<Wdth; w++){
 		for(var h=0; h<Hgth; h++){
 			assignPixelColor(w, h); 
 		}
 	}
+
+	console.log("Fractal recien salido del horno.");
 }
 
 function changeBoxesDifferentToLineal(){
