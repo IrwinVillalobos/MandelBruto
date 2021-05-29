@@ -74,16 +74,63 @@ var rBackBase, gBackBase, bBackBase;
 var rSet, gSet, bSet;
 var SetColor;
 
-var paintPixelMethod = 0;
+var pointsPerPixel = 4;
+var pointsConfiguration = 0; 
+var pointsShareInformation = true;
 
+var POINTS_CONFIGURATION_CROSS = 0; // -> Configuración en tacha.
+var POINTS_CONFIGURATION_PLUS = 1;  // -> Configuración en cruz.
+
+/*
 var PAINT_PIXEL_METHOD_1TO1 = 0;             // -> Un punto por pixel.
 var PAINT_PIXEL_METHOD_4TO1_INDV_CROSS = 1;  // -> Cuatro puntos por pixel. No comparten puntos. Arreglo en cruz.
 var PAINT_PIXEL_METHOD_4TO1_INDV_PLUS = 2;   // -> Cuatro puntos por pixel. No comparten puntos. Arreglo en mas.
 var PAINT_PIXEL_METHOD_4TO1_SHRD_CROSS = 3;  // -> Cuatro puntos por pixel. Comparten puntos. Arreglo en cruz.
 var PAINT_PIXEL_METHOD_4TO1_SHRD_PLUS = 4;   // -> Cuatro puntos por pixel. Comparten puntos. Arreglo en mas.
+*/
 
-var crossStep = [ [1, 1], [1, -1], [-1, 1], [-1, -1] ];
-var plusStep = [ [0, 1], [1, 0], [0, -1], [-1, 0] ];
+var crossStep       = [ [1, 1],  [1, -1],  [-1,  1],  [-1, -1] ];
+var plusStep        = [ [0, 1],  [1,  0],  [0,  -1],  [-1,  0] ];
+var crossMatrixStep = [ [0, 0],  [0,  1],  [1,   0],  [1,   1] ];
+var plusMatrixStep  = [ [0, 0],  [0,  1],  [0,   2],  [1,   1] ];
+
+var iterMatrix = new Array(Hgth+1);
+
+for(var i=0; i<=Hgth; i++){
+	iterMatrix[i] = new Array(2*Wdth+2);
+	for(var j=0; j<=2*Wdth+1; j++){
+		iterMatrix[i][j] = -1;
+	}
+}
+
+function assignPixelColor(w, h){
+	var rPix = 0;
+	var gPix = 0;
+	var bPix = 0;
+	var delta = 0.5*(zoomH/Hgth);
+	for(var i=0; i<4; i++){
+		var iterations = iterMatrix[h+crossMatrixStep[i][0]][w+crossMatrixStep[i][1]];
+		if(iterations == -1){
+			var point = MapToComplexPoint(h+delta*crossStep[i][0], w+delta*crossStep[i][1]);
+			iterations = iterationsToGetOutOfMandelSet(point);
+		}
+		if(iterations == maxIter){
+			rPix += rSet;
+			gPix += gSet;
+			bPix += bSet;
+		}
+		else{
+			rPix += mapIterationsToPrimaryColor(iterations, rBackBase);
+			gPix += mapIterationsToPrimaryColor(iterations, gBackBase);
+			bPix += mapIterationsToPrimaryColor(iterations, bBackBase);				
+		}
+	}
+	rPix /= 4.0; rPix = parseInt(rPix);
+	gPix /= 4.0; gPix = parseInt(gPix);
+	bPix /= 4.0; bPix = parseInt(bPix);
+	var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
+	paintPixel(w, h, pixColor);
+}
 
 function assignPixelColor(w, h){
 	if(paintPixelMethod == PAINT_PIXEL_METHOD_1TO1){
@@ -157,10 +204,66 @@ function assignPixelColor(w, h){
 		paintPixel(w, h, pixColor);
 	}
 	else if(paintPixelMethod == PAINT_PIXEL_METHOD_4TO1_SHRD_CROSS){
-
+		if(h == 0 && w == 0){
+			console.log("Usando 4 a 1 Shrd Cross");
+		}
+		var rPix = 0;
+		var gPix = 0;
+		var bPix = 0;
+		var delta = 0.5*(zoomH/Hgth);
+		for(var i=0; i<4; i++){
+			var iterations = iterMatrix[h+crossMatrixStep[i][0]][w+crossMatrixStep[i][1]];
+			if(iterations == -1){
+				var point = MapToComplexPoint(h+delta*crossStep[i][0], w+delta*crossStep[i][1]);
+				iterations = iterationsToGetOutOfMandelSet(point);
+			}
+			if(iterations == maxIter){
+				rPix += rSet;
+				gPix += gSet;
+				bPix += bSet;
+			}
+			else{
+				rPix += mapIterationsToPrimaryColor(iterations, rBackBase);
+				gPix += mapIterationsToPrimaryColor(iterations, gBackBase);
+				bPix += mapIterationsToPrimaryColor(iterations, bBackBase);				
+			}
+		}
+		rPix /= 4.0; rPix = parseInt(rPix);
+		gPix /= 4.0; gPix = parseInt(gPix);
+		bPix /= 4.0; bPix = parseInt(bPix);
+		var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
+		paintPixel(w, h, pixColor);
 	}
 	else if(paintPixelMethod == PAINT_PIXEL_METHOD_4TO1_SHRD_PLUS){
-
+		if(h == 0 && w == 0){
+			console.log("Usando 4 a 1 Shrd Cross");
+		}
+		var rPix = 0;
+		var gPix = 0;
+		var bPix = 0;
+		var delta = 0.5*(zoomH/Hgth);
+		for(var i=0; i<4; i++){
+			var iterations = iterMatrix[h+plusMatrixStep[i][0]][2*w+plusMatrixStep[i][1]];
+			if(iterations == -1){
+				var point = MapToComplexPoint(h+delta*plusStep[i][0], w+delta*plusStep[i][1]);
+				iterations = iterationsToGetOutOfMandelSet(point);
+			}
+			if(iterations == maxIter){
+				rPix += rSet;
+				gPix += gSet;
+				bPix += bSet;
+			}
+			else{
+				rPix += mapIterationsToPrimaryColor(iterations, rBackBase);
+				gPix += mapIterationsToPrimaryColor(iterations, gBackBase);
+				bPix += mapIterationsToPrimaryColor(iterations, bBackBase);				
+			}
+		}
+		rPix /= 4.0; rPix = parseInt(rPix);
+		gPix /= 4.0; gPix = parseInt(gPix);
+		bPix /= 4.0; bPix = parseInt(bPix);
+		var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
+		paintPixel(w, h, pixColor);
 	}
 }
 
@@ -189,6 +292,15 @@ function drawMandelSet(){
 
 	for(var w=0; w<Wdth; w++){
 		for(var h=0; h<Hgth; h++){
+			switch(paintPixelMethod){
+				case PAINT_PIXEL_METHOD_1TO1:
+
+				case PAINT_PIXEL_METHOD_4TO1_INDV_CROSS:
+
+				case PAINT_PIXEL_METHOD_4TO1_INDV_PLUS:
+
+				case PA
+			}
 			assignPixelColor(w, h); 
 		}
 	}
