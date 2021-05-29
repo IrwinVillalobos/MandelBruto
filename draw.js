@@ -221,17 +221,54 @@ function changeBoxesDifferentToExponential(){
 }
 
 function changeBoxesDifferentTo1to1(){
-	if(document.getElementById("1to1Box").checked == 1)
+	if(document.getElementById("1to1Box").checked == 1){
 		document.getElementById("4to1Box").checked = 0;
-	else
+		document.getElementById("plusBox").checked = 0;
+		document.getElementById("plusBox").disabled = 1;
+		document.getElementById("crossBox").checked = 0;
+		document.getElementById("crossBox").disabled = 1;
+		document.getElementById("pixelsDoShareBox").checked = 0;
+		document.getElementById("pixelsDoShareBox").disabled = 1;
+		document.getElementById("pixelsDontShareBox").checked = 0;
+		document.getElementById("pixelsDontShareBox").disabled = 1;
+	}
+	else{
 		document.getElementById("4to1Box").checked = 1;
+		document.getElementById("plusBox").checked = 0;
+		document.getElementById("plusBox").disabled = 0;
+		document.getElementById("crossBox").checked = 1;
+		document.getElementById("crossBox").disabled = 0;
+		document.getElementById("pixelsDoShareBox").checked = 1;
+		document.getElementById("pixelsDoShareBox").disabled = 0;
+		document.getElementById("pixelsDontShareBox").checked = 0;
+		document.getElementById("pixelsDontShareBox").disabled = 0;
+	}
 }
 
 function changeBoxesDifferentTo4to1(){
-	if(document.getElementById("4to1Box").checked == 1)
+	if(document.getElementById("4to1Box").checked == 1){
 		document.getElementById("1to1Box").checked = 0;
-	else
+		document.getElementById("4to1Box").checked = 1;
+		document.getElementById("plusBox").checked = 0;
+		document.getElementById("plusBox").disabled = 0;
+		document.getElementById("crossBox").checked = 1;
+		document.getElementById("crossBox").disabled = 0;
+		document.getElementById("pixelsDoShareBox").checked = 1;
+		document.getElementById("pixelsDoShareBox").disabled = 0;
+		document.getElementById("pixelsDontShareBox").checked = 0;
+		document.getElementById("pixelsDontShareBox").disabled = 0;
+	}
+	else{
 		document.getElementById("1to1Box").checked = 1;
+		document.getElementById("plusBox").checked = 0;
+		document.getElementById("plusBox").disabled = 1;
+		document.getElementById("crossBox").checked = 0;
+		document.getElementById("crossBox").disabled = 1;
+		document.getElementById("pixelsDoShareBox").checked = 0;
+		document.getElementById("pixelsDoShareBox").disabled = 1;
+		document.getElementById("pixelsDontShareBox").checked = 0;
+		document.getElementById("pixelsDontShareBox").disabled = 1;
+	}
 }
 
 function changeBoxesDifferentToCross(){
