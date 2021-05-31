@@ -3,9 +3,35 @@
 console.log("La vida es dura, pero es mas dura la verdura.");
 var MandelCanvas = document.getElementById("MandelPicture");
 var MandelLienzo = MandelCanvas.getContext("2d");
+var loadBarCanvas = document.getElementById("LoadBar");
+var loadBarLienzo = loadBarCanvas.getContext("2d");
+
+loadBarLienzo.fillStyle = "black";
+loadBarLienzo.fillRect(0, 0, loadBarCanvas.width, loadBarCanvas.height);
+var borderThikness = 2;
+emptyLoadBar();
 
 var Wdth = MandelCanvas.width;
 var Hgth = MandelCanvas.height;
+
+function emptyLoadBar(){
+	loadBarLienzo.fillStyle = "white";
+	loadBarLienzo.fillRect(
+		borderThikness, 
+		borderThikness, 
+		loadBarCanvas.width-2*borderThikness, 
+		loadBarCanvas.height-2*borderThikness);
+}
+
+function fillLoadBar(p){
+	loadBarLienzo.fillStyle = "rgb(0,255,0)";
+	loadBarLienzo.fillRect(
+		borderThikness, 
+		borderThikness, 
+		parseInt(p*(loadBarCanvas.width-2*borderThikness)/100), 
+		loadBarCanvas.height-2*borderThikness);
+	loadBarLienzo.stroke();
+}
 
 document.getElementById("drawButton").addEventListener("click", drawMandelSet);
 document.getElementById("mapTypeBoxLineal").addEventListener("change", changeBoxesDifferentToLineal);
@@ -139,6 +165,10 @@ function assignPixelColor(w, h){
 
 function drawMandelSet(){
 
+	var startExecution = new Date();
+
+	emptyLoadBar();
+
 	maxIter = parseInt(document.getElementById("iteracionesBox").value);
 	
 	rBackBase = parseInt(document.getElementById("redBack").value);
@@ -198,12 +228,19 @@ function drawMandelSet(){
 	}
 
 	for(var w=0; w<Wdth; w++){
+		if(((w+1)*10)%Wdth == 0){
+			fillLoadBar(parseInt((w+1)*100/Wdth));
+			console.log("Avance: " + parseInt((w+1)*100/Wdth) + "%")
+		}
 		for(var h=0; h<Hgth; h++){
 			assignPixelColor(w, h); 
 		}
 	}
 
+	var endExecution = new Date();
+
 	console.log("Fractal recien salido del horno.");
+	console.log("Tiempo de ejecución: "+ (endExecution.getTime() - startExecution.getTime())/1000 + " segundos");
 }
 
 function changeBoxesDifferentToLineal(){
