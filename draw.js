@@ -169,15 +169,17 @@ function drawMandelSet(){
 
 	emptyLoadBar();
 
-	maxIter = parseInt(document.getElementById("iteracionesBox").value);
+	maxIter = parseInt(document.getElementById("IteracionesBox").value);
 	
-	rBackBase = parseInt(document.getElementById("redBack").value);
-	gBackBase = parseInt(document.getElementById("greenBack").value);
-	bBackBase = parseInt(document.getElementById("blueBack").value);
-	
-	rSet = parseInt(document.getElementById("redSet").value);
-	gSet = parseInt(document.getElementById("greenSet").value);
-	bSet = parseInt(document.getElementById("blueSet").value);
+	var backColor = document.getElementById("BackColorBox");
+	rBackBase = parseInt("0x" + backColor.value.substring(1, 3));
+	gBackBase = parseInt("0x" + backColor.value.substring(3, 5));
+	bBackBase = parseInt("0x" + backColor.value.substring(5, 7));	
+
+	var setColor = document.getElementById("SetColorBox");
+	rSet = parseInt("0x" + setColor.value.substring(1, 3));
+	gSet = parseInt("0x" + setColor.value.substring(3, 5));
+	bSet = parseInt("0x" + setColor.value.substring(5, 7));
 	
 	closerDarker = document.getElementById("closerDarkerCheckBox").checked;
 	

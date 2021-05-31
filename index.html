@@ -26,25 +26,22 @@
 				<p> Para determinar si la sucesión está acotada, se calculan las primeras iteraciones y vemos si la norma de la última iteración tiene norma menor o igual a un margen.</p>
 				<p> Así pues cada pixel se colorea siguiendo estas reglas </p>
 			</section>
-			<section>	
-				<p> Ingresa la cantidad de iteraciones: <input type="text" id="iteracionesBox" size="4" value="12" /> </p>
-				<p> Ingresa el color del fondo (numeros entre 0 y 255): 
-					<strong>R</strong> 
-					<input type="text" id="redBack" size="1" value="50" /> ,
-					<strong>G</strong> 
-					<input type="text" id="greenBack" size="1" value="50" /> ,
-					<strong>B</strong> 
-					<input type="text" id="blueBack" size="1" value="50" /> .
-				</p>
-				<p> Ingresa el color del relleno (numeros entre 0 y 255): 
-					<strong>R</strong> 
-					<input type="text" id="redSet" size="1" value="0" /> ,
-					<strong>G</strong> 
-					<input type="text" id="greenSet" size="1" value="0" /> ,
-					<strong>B</strong> 
-					<input type="text" id="blueSet" size="1" value="0" /> 
-				</p>
-				<p>	<input type="button" value="Crear fractal" id="drawButton" /> </p>
+			<section>
+				<form>	 
+					<label for="IteracionesBox">
+						<span> Ingresa la cantidad de iteraciones: </span>
+						<input type="text" id="IteracionesBox" size="4" value="12" /> 
+					</label> <br> <br>
+					<label for="BackColorBox">
+						<span> Ingresa el color del fondo: </span> 
+						<input type="color" name="BackColorBox" id="BackColorBox" value="#808080">
+					</label> <br> <br>
+					<label for="SetColorBox"> 
+						<span> Ingresa el color del relleno: </span>
+						<input type="color" name="SetColorBox" id="SetColorBox" value="#000000"> 
+					</label> <br> <br>
+					<input type="button" value="Crear fractal" id="drawButton" /> <br> <br>
+				</form>
 			</section>
 			<section>
 				<canvas width="800" height="600" id="MandelPicture"></canvas>
@@ -52,24 +49,53 @@
 			</section>
 			<section>
 				<h3> Opciones adicionales: </h3>
-				<p> 
-					<input type="checkbox" id="closerDarkerCheckBox"> Los colores se hacen más oscuros entre mas cercanos al conjunto. 
-				</p>
-				<p> <strong>Tipo de mapeo de color:</strong> 
-					<input type="checkbox" id="mapTypeBoxLineal"> Lineal 
-					<input type="checkbox" checked="1" id="mapTypeBoxExponential"> Exponencial 
-				</p>
-				<p> <strong>Puntos por pixel:</strong> 
-					<input type="checkbox" id="1to1Box"> Un punto 
-					<input type="checkbox" checked="1" id="4to1Box"> Cuatro puntos 
-				</p>
-				<p> <strong>Configuración de puntos:</strong> 
-					<input type="checkbox"  checked="1"id="crossBox"> Tacha 
-					<input type="checkbox"  id="plusBox"> Cruz </p>
-				<p> <strong>Los pixeles comparten información:</strong> 
-					<input type="checkbox" checked="1" id="pixelsDoShareBox"> Sí 
-					<input type="checkbox" id="pixelsDontShareBox"> No 
-				</p>
+				<form>
+					
+					<label for = "closerDarkerCheckBox">
+						<input type="checkbox" id="closerDarkerCheckBox"> 
+						<span> Los colores se hacen más oscuros entre mas cercanos al conjunto. </span> 
+					</label> <br> <br>
+					
+					<strong>Tipo de mapeo de color: </strong> 
+					<label for="mapTypeBoxLineal">		
+						<input type="checkbox" id="mapTypeBoxLineal"> 
+						<span> Lineal </span> 
+					</label> 
+					<label for="mapTypeBoxExponential">
+						<input type="checkbox" checked="1" id="mapTypeBoxExponential">
+						<span> Exponencial </span>
+					</label> <br> <br>
+					
+					<strong> Puntos por pixel: </strong> 
+					<label for="1to1Box">
+						<input type="checkbox" id="1to1Box"> 
+						<span> Un punto </span> 
+					</label>
+					<label for="4to1Box"> 
+						<input type="checkbox" checked="1" id="4to1Box"> 
+						<span> Cuatro puntos </span>
+					</label> <br> <br>
+					
+					<strong> Configuración de puntos: </strong>
+					<label for="crossBox">
+						<input type="checkbox" checked="1" id="crossBox"> 
+						<span> Tacha </span>	
+					</label>
+					<label for="plusBox">
+						<input type="checkbox" id="plusBox"> 
+						<span> Cruz </span> 	
+					</label> <br> <br> 
+
+					<strong> Los pixeles comparten información: </strong> 
+					<label for="pixelsDoShareBox">
+						<input type="checkbox" checked="1" id="pixelsDoShareBox"> 
+						<span> Sí </span> 
+					</label>
+					<label for="pixelsDontShareBox">
+						<input type="checkbox" id="pixelsDontShareBox"> 
+						<span> No </span> 
+					</label> <br> <br>
+				</form>
 			</section>
 		</main>
 		<footer></footer>
