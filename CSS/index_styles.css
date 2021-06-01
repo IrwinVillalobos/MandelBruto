@@ -7,7 +7,7 @@ body {
 main {
 	margin: auto;
 	background-color: #202020;
-	width: 80%;
+	width: 90%;
 	padding: 10px;
 }
 
@@ -16,13 +16,39 @@ h1 {
 	font-size: 40px;
 }
 
-#MandelPictureSection{
-	margin: auto;
-	width: 800px;
+#PictureSection {
+	clear: both;
+}
+
+#OtherOptionsSection {
+	clear: both;
+}
+
+#MandelPictureDiv {
+	float: left;
+	width: 75%;
+	display: flex;
+	justify-content: center;
+}
+
+#CreateFractalDiv {
+	float: left;
+	width: 25%;
+	height: 600px;
+	display: flex;
+	justify-content: center;
+	align-content:  center;
+	flex-wrap: wrap;
 }
 
 #MandelPicture {
 	border: 5px solid black;
 	padding: 5px;
-	background-color: #a0a0a0;
+	background-color: #404040;
+}
+
+#CreateFractalForm {
+	border: 5px solid black;
+	padding: 12px;
+	background-color: #404040;
 }

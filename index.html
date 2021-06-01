@@ -25,31 +25,48 @@
 				<p>En seguida se genera una sucesión de complejos $(z_n)_{n \in \mathbb{N}}$ definidos típicamente por la fórmula $$z_{n+1} = z_n^2  +c \quad \mbox{ y } \quad z_0 = 0.$$ </p>
 				<p> Si esta suceción está acotada, entonces el punto $(x, y)$ pertenece al conjunto. Si no está acotada, entonces no pertenece. </p>
 				<p> Para determinar si la sucesión está acotada, se calculan las primeras iteraciones y vemos si la norma de la última iteración tiene norma menor o igual a un margen.</p>
-				<p> Así pues cada pixel se colorea siguiendo estas reglas </p>
+				<p> Así pues cada pixel se colorea siguiendo estas reglas.</p>
 			</section>
-			<section>
-				<form>	 
-					<label for="IteracionesBox">
-						<span> Ingresa la cantidad de iteraciones: </span>
-						<input type="text" id="IteracionesBox" size="4" value="12" /> 
-					</label> <br> <br>
-					<label for="BackColorBox">
-						<span> Ingresa el color del fondo: </span> 
-						<input type="color" name="BackColorBox" id="BackColorBox" value="#808080">
-					</label> <br> <br>
-					<label for="SetColorBox"> 
-						<span> Ingresa el color del relleno: </span>
-						<input type="color" name="SetColorBox" id="SetColorBox" value="#000000"> 
-					</label> <br> <br>
-					<input type="button" value="Crear fractal" id="drawButton" /> <br> <br>
-				</form>
-			</section>
-			<section id="MandelPictureSection">
-				<canvas width="800" height="600" id="MandelPicture"></canvas>
-				
-				<!-- <canvas width="800" height="30" id="LoadBar"></canvas> --> 
-			</section>
-			<section>
+
+			<section id="PictureSection" >
+				<div id="MandelPictureDiv">
+					<canvas width="800" height="600" id="MandelPicture"></canvas>
+					<!-- <canvas width="800" height="30" id="LoadBar"></canvas> --> 
+				</div>
+				<div id="CreateFractalDiv">
+					<form id="CreateFractalForm">	 
+						<label for="IteracionesBox">
+							<span> Iteraciones: </span>
+							<input type="text" id="IteracionesBox" size="4" value="12" /> 
+						</label> <br> <br>
+						<label for="BackColorBox">
+							<span> Color del fondo: </span> 
+							<input type="color" name="BackColorBox" id="BackColorBox" value="#808080">
+						</label> <br> <br>
+						<label for="SetColorBox"> 
+							<span> Color del relleno: </span>
+							<input type="color" name="SetColorBox" id="SetColorBox" value="#000000"> 
+						</label> <br> <br>
+						<label for="ZoomBox">
+							<span> Zoom: </span>
+							<input type="text" size="5" id="ZoomBox">
+						</label> <br> <br>
+						Centro:
+						<label for="ReCenterBox">
+							<input type="text" size="4" id="ReCenterBox">	
+						</label>
+						$i +$
+						<label for="ImCenterBox">
+							<input type="text" size="4" id="ImCenterBox">
+						</label> <br> <br>
+						<input type="button" value="Crear fractal" id="drawButton" /> 
+						<br>	
+					</form>
+				</div>
+			</section> 
+
+			<section id="OtherOptionsSection">
+				<br>
 				<h3> Opciones adicionales: </h3>
 				<form>
 					
