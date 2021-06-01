@@ -3,13 +3,13 @@
 console.log("La vida es dura, pero es mas dura la verdura.");
 var MandelCanvas = document.getElementById("MandelPicture");
 var MandelLienzo = MandelCanvas.getContext("2d");
-var loadBarCanvas = document.getElementById("LoadBar");
-var loadBarLienzo = loadBarCanvas.getContext("2d");
+//var loadBarCanvas = document.getElementById("LoadBar");
+//var loadBarLienzo = loadBarCanvas.getContext("2d");
 
-loadBarLienzo.fillStyle = "black";
+/*loadBarLienzo.fillStyle = "black";
 loadBarLienzo.fillRect(0, 0, loadBarCanvas.width, loadBarCanvas.height);
 var borderThikness = 2;
-emptyLoadBar();
+emptyLoadBar();*/
 
 var Wdth = MandelCanvas.width;
 var Hgth = MandelCanvas.height;
@@ -167,7 +167,7 @@ function drawMandelSet(){
 
 	var startExecution = new Date();
 
-	emptyLoadBar();
+	//emptyLoadBar();
 
 	maxIter = parseInt(document.getElementById("IteracionesBox").value);
 	
@@ -231,7 +231,7 @@ function drawMandelSet(){
 
 	for(var w=0; w<Wdth; w++){
 		if(((w+1)*10)%Wdth == 0){
-			fillLoadBar(parseInt((w+1)*100/Wdth));
+			//fillLoadBar(parseInt((w+1)*100/Wdth));
 			console.log("Avance: " + parseInt((w+1)*100/Wdth) + "%")
 		}
 		for(var h=0; h<Hgth; h++){

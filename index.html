@@ -6,6 +6,7 @@
 		<meta name="robots" content="index,follow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Conjunto de Mandelbrot.</title>
+		<link rel="stylesheet" type="text/css" href="./CSS/index_styles.css">
 		<script type="text/x-mathjax-config">
 			MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 		</script>
@@ -21,7 +22,7 @@
 				<h1>Conjunto de Mandelbrot</h1>
 				<p>Se trata de un fractal en el plano en el que lucen patrones bastante atractivos y peculiares. </p>
 				<p>La idea para determinar si un punto $(x, y)$ pertenece o no al conjunto es pensar este punto como el número complejo $$c = x + i y.$$ </p>
-				<p>En seguida se genera una sucesión de complejos $(z_n)_{n \in \mathbb{N}}$ definidos típicamente por la fórmula $$z_{n+1} = z_n^2  +c \mbox{ y }  z_0 = 0.$$ </p>
+				<p>En seguida se genera una sucesión de complejos $(z_n)_{n \in \mathbb{N}}$ definidos típicamente por la fórmula $$z_{n+1} = z_n^2  +c \quad \mbox{ y } \quad z_0 = 0.$$ </p>
 				<p> Si esta suceción está acotada, entonces el punto $(x, y)$ pertenece al conjunto. Si no está acotada, entonces no pertenece. </p>
 				<p> Para determinar si la sucesión está acotada, se calculan las primeras iteraciones y vemos si la norma de la última iteración tiene norma menor o igual a un margen.</p>
 				<p> Así pues cada pixel se colorea siguiendo estas reglas </p>
@@ -43,9 +44,10 @@
 					<input type="button" value="Crear fractal" id="drawButton" /> <br> <br>
 				</form>
 			</section>
-			<section>
+			<section id="MandelPictureSection">
 				<canvas width="800" height="600" id="MandelPicture"></canvas>
-				<canvas width="800" height="30" id="LoadBar"></canvas> 
+				
+				<!-- <canvas width="800" height="30" id="LoadBar"></canvas> --> 
 			</section>
 			<section>
 				<h3> Opciones adicionales: </h3>
