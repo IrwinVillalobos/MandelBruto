@@ -41,6 +41,11 @@ h1 {
 	flex-wrap: wrap;
 }
 
+#DrawButtonDiv {
+	display: flex;
+	justify-content: center;
+}
+
 #MandelPicture {
 	border: 5px solid black;
 	padding: 5px;
@@ -51,4 +56,9 @@ h1 {
 	border: 5px solid black;
 	padding: 12px;
 	background-color: #404040;
+}
+
+
+#DrawButton {
+	font-size: 18px;
 }

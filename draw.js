@@ -33,7 +33,7 @@ function fillLoadBar(p){
 	loadBarLienzo.stroke();
 }
 
-document.getElementById("drawButton").addEventListener("click", drawMandelSet);
+document.getElementById("DrawButton").addEventListener("click", drawMandelSet);
 document.getElementById("mapTypeBoxLineal").addEventListener("change", changeBoxesDifferentToLineal);
 document.getElementById("mapTypeBoxExponential").addEventListener("change", changeBoxesDifferentToExponential);
 document.getElementById("1to1Box").addEventListener("change", changeBoxesDifferentTo1to1);
@@ -51,7 +51,10 @@ function paintPixel(x, y, color){
 var centerRe = -1.2;
 var centerIm = 0;
 var zoomH = 2.4;
-var ColNums = 10;
+
+document.getElementById("ZoomBox").value = zoomH;
+document.getElementById("ReCenterBox").value = centerRe;
+document.getElementById("ImCenterBox").value = centerIm;
 
 function MapToComplexPoint(h, w){
 	return math.complex(zoomH*(w/Hgth - 0.5)+centerRe, zoomH*(h/Hgth - 0.5)+centerIm);	
@@ -167,7 +170,13 @@ function drawMandelSet(){
 
 	var startExecution = new Date();
 
+	document.getElementById("DrawButton").value = "Recalcular Fractal";
+
 	//emptyLoadBar();
+
+	zoomH = parseFloat(document.getElementById("ZoomBox").value);
+	centerRe = parseFloat(document.getElementById("ReCenterBox").value);
+	centerIm = parseFloat(document.getElementById("ImCenterBox").value);
 
 	maxIter = parseInt(document.getElementById("IteracionesBox").value);
 	
