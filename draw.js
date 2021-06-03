@@ -34,6 +34,7 @@ function fillLoadBar(p){
 }
 
 document.getElementById("DrawButton").addEventListener("click", drawMandelSet);
+document.getElementById("ZoomInButton").addEventListener("click", divideZoomH);
 document.getElementById("mapTypeBoxLineal").addEventListener("change", changeBoxesDifferentToLineal);
 document.getElementById("mapTypeBoxExponential").addEventListener("change", changeBoxesDifferentToExponential);
 document.getElementById("1to1Box").addEventListener("change", changeBoxesDifferentTo1to1);
@@ -42,6 +43,7 @@ document.getElementById("crossBox").addEventListener("change", changeBoxesDiffer
 document.getElementById("plusBox").addEventListener("change", changeBoxesDifferentToPlus);
 document.getElementById("pixelsDoShareBox").addEventListener("change", changeBoxesDifferentToDoShare);
 document.getElementById("pixelsDontShareBox").addEventListener("change", changeBoxesDifferentToDontShare);
+MandelCanvas.addEventListener("click", changeCenter);
 
 function paintPixel(x, y, color){
 	MandelLienzo.fillStyle = color;
@@ -164,6 +166,17 @@ function assignPixelColor(w, h){
 	bPix /= pointsPerPixel; bPix = parseInt(bPix);
 	var pixColor = "rgb(" + rPix + "," + gPix + "," + bPix + ")";
 	paintPixel(w, h, pixColor);
+}
+
+function divideZoomH(){
+	document.getElementById("ZoomBox").value /= 2;
+	alert("Selecciona un punto del fractal para seleccionarlo como el centro de la nueva figura y presiona el botón de recalcular fractal");
+}
+
+function changeCenter(event){
+	var point = MapToComplexPoint(event.layerY, event.layerX); 
+	document.getElementById("ReCenterBox").value =  point.re;
+	document.getElementById("ImCenterBox").value =  point.im;
 }
 
 function drawMandelSet(){
