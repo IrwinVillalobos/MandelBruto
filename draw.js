@@ -63,6 +63,7 @@ function MapToComplexPoint(h, w){
 }
 
 var maxIter = 12;
+var progress;
 
 function iterationsToGetOutOfMandelSet(C){
 
@@ -183,6 +184,8 @@ function drawMandelSet(){
 
 	var startExecution = new Date();
 
+	progress = 0;
+
 	document.getElementById("DrawButton").value = "Recalcular Fractal";
 
 	//emptyLoadBar();
@@ -250,16 +253,17 @@ function drawMandelSet(){
 			}
 		}	
 	}
-
+	
 	for(var w=0; w<Wdth; w++){
 		if(((w+1)*10)%Wdth == 0){
-			//fillLoadBar(parseInt((w+1)*100/Wdth));
-			console.log("Avance: " + parseInt((w+1)*100/Wdth) + "%")
+			progress = parseInt((w+1)*100/Wdth);
+			console.log("Avance: " + progress + "%")
 		}
 		for(var h=0; h<Hgth; h++){
 			assignPixelColor(w, h); 
 		}
 	}
+	
 
 	var endExecution = new Date();
 
