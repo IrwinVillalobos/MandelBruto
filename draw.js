@@ -59,19 +59,24 @@ document.getElementById("ReCenterBox").value = centerRe;
 document.getElementById("ImCenterBox").value = centerIm;
 
 function MapToComplexPoint(h, w){
-	return math.complex(zoomH*(w/Hgth - 0.5)+centerRe, zoomH*(h/Hgth - 0.5)+centerIm);	
+	return {
+		re: zoomH*(w/Hgth - 0.5)+centerRe, 
+		im: zoomH*(h/Hgth - 0.5)+centerIm
+	};	
 }
 
 var maxIter = 12;
 
 function iterationsToGetOutOfMandelSet(C){
 
-	var Z = math.complex(0, 0);
+	var Z = { re: 0, im: 0};
 	var cont = 0;
 	
 	while(cont < maxIter){
 		if(Z.re*Z.re + Z.im*Z.im < 4.0){
-			Z = math.add(math.multiply(Z, Z), C);
+			var aux = Z.re*Z.re - Z.im*Z.im + C.re;
+			Z.im = 2*(Z.re*Z.im) + C.im;
+			Z.re = aux;
 			cont++;
 		}
 		else
@@ -148,6 +153,12 @@ function assignPixelColor(w, h){
 			else
 				point = MapToComplexPoint(h+delta*plusStep[i][0], w+delta*plusStep[i][1]);				
 			iterations = iterationsToGetOutOfMandelSet(point);
+			if(pixelsShareInformation){
+				if(pointsConfiguration == POINTS_CONFIGURATION_CROSS)
+					iterMatrix[h+crossMatrixStep[i][0]][w+crossMatrixStep[i][1]] = iterations;
+				else if(pointsConfiguration == POINTS_CONFIGURATION_PLUS)
+					iterMatrix[h+plusMatrixStep[i][0]][w+plusMatrixStep[i][1]] = iterations;
+			}
 		}
 
 		if(iterations == maxIter){
