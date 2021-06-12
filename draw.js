@@ -166,6 +166,26 @@ function changeCenter(event){
 	document.getElementById("ImCenterBox").value =  point.im;
 }
 
+var BUNCH_SIZE = 60;
+
+function assignColumnsColors(start){
+	if(start >= Wdth)
+		return;
+	for(var w=start; w<Wdth && w<start+BUNCH_SIZE; w++){
+		for(var h=0; h<Hgth; h++){
+			assignPixelColor(w, h); 
+		}
+	}
+
+	progress = parseInt((w+1)*100/Wdth);
+	document.getElementById("ProgressBar").value = progress;
+	console.log("Avance: " + progress + "%");
+
+	setTimeout( () => {
+		assignColumnsColors(start+BUNCH_SIZE);
+	}, 0);
+}
+
 function drawMandelSet(){
 
 	var startExecution = new Date();
@@ -240,16 +260,7 @@ function drawMandelSet(){
 		}	
 	}
 	
-	for(var w=0; w<Wdth; w++){
-		if(((w+1)*10)%Wdth == 0){
-			progress = parseInt((w+1)*100/Wdth);
-			console.log("Avance: " + progress + "%")
-		}
-		for(var h=0; h<Hgth; h++){
-			assignPixelColor(w, h); 
-		}
-	}
-	
+	assignColumnsColors(0);
 
 	var endExecution = new Date();
 
