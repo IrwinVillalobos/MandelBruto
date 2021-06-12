@@ -3,35 +3,10 @@
 console.log("La vida es dura, pero es mas dura la verdura.");
 var MandelCanvas = document.getElementById("MandelPicture");
 var MandelLienzo = MandelCanvas.getContext("2d");
-//var loadBarCanvas = document.getElementById("LoadBar");
-//var loadBarLienzo = loadBarCanvas.getContext("2d");
-
-/*loadBarLienzo.fillStyle = "black";
-loadBarLienzo.fillRect(0, 0, loadBarCanvas.width, loadBarCanvas.height);
-var borderThikness = 2;
-emptyLoadBar();*/
 
 var Wdth = MandelCanvas.width;
 var Hgth = MandelCanvas.height;
 
-function emptyLoadBar(){
-	loadBarLienzo.fillStyle = "white";
-	loadBarLienzo.fillRect(
-		borderThikness, 
-		borderThikness, 
-		loadBarCanvas.width-2*borderThikness, 
-		loadBarCanvas.height-2*borderThikness);
-}
-
-function fillLoadBar(p){
-	loadBarLienzo.fillStyle = "rgb(0,255,0)";
-	loadBarLienzo.fillRect(
-		borderThikness, 
-		borderThikness, 
-		parseInt(p*(loadBarCanvas.width-2*borderThikness)/100), 
-		loadBarCanvas.height-2*borderThikness);
-	loadBarLienzo.stroke();
-}
 
 document.getElementById("DrawButton").addEventListener("click", drawMandelSet);
 document.getElementById("ZoomInButton").addEventListener("click", divideZoomH);
