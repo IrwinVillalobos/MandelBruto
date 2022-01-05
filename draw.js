@@ -169,8 +169,13 @@ function changeCenter(event){
 var BUNCH_SIZE = 60;
 
 function assignColumnsColors(start){
-	if(start >= Wdth)
-		return;
+	if(start >= Wdth){
+		var endExecution = new Date();
+
+		console.log("Fractal recien salido del horno.");
+		console.log("Tiempo de ejecución: "+ (endExecution.getTime() - startExecution.getTime())/1000 + " segundos");
+			return;
+	}
 	for(var w=start; w<Wdth && w<start+BUNCH_SIZE; w++){
 		for(var h=0; h<Hgth; h++){
 			assignPixelColor(w, h); 
@@ -186,9 +191,11 @@ function assignColumnsColors(start){
 	}, 0);
 }
 
+var startExecution;
+
 function drawMandelSet(){
 
-	var startExecution = new Date();
+	startExecution = new Date();
 
 	progress = 0;
 
@@ -262,10 +269,6 @@ function drawMandelSet(){
 	
 	assignColumnsColors(0);
 
-	var endExecution = new Date();
-
-	console.log("Fractal recien salido del horno.");
-	console.log("Tiempo de ejecución: "+ (endExecution.getTime() - startExecution.getTime())/1000 + " segundos");
 }
 
 function changeBoxesDifferentToLineal(){
